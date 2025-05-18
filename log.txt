@@ -1,36 +1,333 @@
-const http = require('http'),
-  fs = require('fs'),
-  url = require('url');
+const http = require('http');
+const url = require('url');
+const fs = require('fs');
+const path = require('path');
 
-http.createServer((request, response) => {
-  let addr = request.url,
-    q = new URL(addr, 'http://' + request.headers.host),
-    filePath = '';
-
-  fs.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', (err) => {
-    if (err) {
-      console.log(err);
+const server = http.createServer((req, res) => {
+    const parsedUrl = url.parse(req.url);
+    const timestamp = new Date().toISOString();
+    
+    // Log the request
+    fs.appendFile('log.txt', `${timestamp}: ${req.url}\n`, (err) => {
+        if (err) console.error('Error writing to log file');
+    });
+    
+    if (parsedUrl.pathname.includes('documentation')) {
+        fs.readFile(path.join(__dirname, 'documentation.html'), (err, data) => {
+            if (err) {
+                res.writeHead(500);
+                res.end('Error loading documentation');
+            } else {
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end(data);
+            }
+        });
     } else {
-      console.log('Added to log.');
+        fs.readFile(path.join(__dirname, 'index.html'), (err, data) => {
+            if (err) {
+                res.writeHead(500);
+                res.end('Error loading index');
+            } else {
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end(data);
+            }
+        });
     }
-  });
+});
 
-  if (q.pathname.includes('documentation')) {
-    filePath = (__dirname + '/documentation.html');
-  } else {
-    filePath = 'index.html';
-  }
+server.listen(8080, () => {
+    console.log('Server listening on port 8080');
+});URL: /
+Timestamp: Sun May 18 2025 16:54:30 GMT+0200 (Central European Summer Time)
 
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      throw err;
-    }
+URL: /style.css
+Timestamp: Sun May 18 2025 16:54:31 GMT+0200 (Central European Summer Time)
 
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.write(data);
-    response.end();
+URL: /server.js
+Timestamp: Sun May 18 2025 16:54:31 GMT+0200 (Central European Summer Time)
 
-  });
+URL: /main.js
+Timestamp: Sun May 18 2025 16:54:31 GMT+0200 (Central European Summer Time)
 
-}).listen(8080);
-console.log('My test server is running on Port 8080.');
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 16:54:31 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 16:55:22 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 16:55:22 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 16:55:22 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 16:55:22 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 16:55:23 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 16:55:49 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 16:55:49 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 16:55:49 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 16:55:49 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 16:55:49 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 16:55:50 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 16:55:50 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 16:55:50 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 16:55:50 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 16:55:50 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 16:55:52 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 16:55:52 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 16:55:52 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 16:55:52 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 16:55:52 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 16:58:52 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 16:58:52 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 16:58:52 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 16:58:52 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 16:58:52 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 16:58:54 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 16:58:54 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 16:58:54 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 16:58:54 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 16:58:54 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 16:59:14 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 16:59:14 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 16:59:14 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 16:59:14 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 16:59:14 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:00:37 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:00:37 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:00:37 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:00:37 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:00:37 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:01:36 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:01:36 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:01:36 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:01:36 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:01:36 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:01:56 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:01:56 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:01:56 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:01:56 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:01:56 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:02:01 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:02:01 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:02:01 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:02:01 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:02:01 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:02:02 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:02:03 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Sun May 18 2025 17:03:12 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Sun May 18 2025 17:12:19 GMT+0200 (Central European Summer Time)
+
+URL: /documents
+Timestamp: Sun May 18 2025 17:15:11 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:15:11 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:15:11 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:15:11 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:15:11 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 17:15:57 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 17:15:57 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 17:15:57 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 17:15:57 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 17:15:57 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Sun May 18 2025 17:16:05 GMT+0200 (Central European Summer Time)
+
