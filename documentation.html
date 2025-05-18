@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie API Documentation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      h1 {
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+      code {
+        background-color: #f4f4f4;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+      .endpoint {
+        background-color: #f9f9f9;
+        border-left: 4px solid #3498db;
+        padding: 10px 15px;
+        margin: 15px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Movie API Documentation</h1>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>
+        Welcome to the Movie API! This API provides access to a collection of
+        movies, including details about directors, genres, and release years.
+        Developers can use this API to retrieve movie information, user data,
+        and create personalized lists of favorite movies.
+      </p>
+    </section>
+
+    <section>
+      <h2>Getting Started</h2>
+      <p>
+        To use this API, you'll need to make HTTP requests to the various
+        endpoints listed below. All responses will be in JSON format.
+      </p>
+    </section>
+
+    <section>
+      <h2>API Endpoints</h2>
+
+      <div class="endpoint">
+        <h3>Get All Movies</h3>
+        <p><strong>Endpoint:</strong> <code>GET /movies</code></p>
+        <p>
+          <strong>Description:</strong> Returns a list of all movies in the
+          database.
+        </p>
+      </div>
+
+      <div class="endpoint">
+        <h3>Get Movie by Title</h3>
+        <p><strong>Endpoint:</strong> <code>GET /movies/:title</code></p>
+        <p>
+          <strong>Description:</strong> Returns data about a single movie by
+          title.
+        </p>
+      </div>
+
+      <!-- You'll add more endpoints as you develop your API -->
+    </section>
+
+    <section>
+      <h2>Future Updates</h2>
+      <p>
+        This documentation will be updated as new features are added to the API.
+        Planned features include user authentication, personalized movie
+        recommendations, and the ability to add reviews.
+      </p>
+    </section>
+  </body>
+</html>
