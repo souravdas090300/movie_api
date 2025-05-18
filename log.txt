@@ -331,3 +331,48 @@ Timestamp: Sun May 18 2025 17:15:57 GMT+0200 (Central European Summer Time)
 URL: /documentation
 Timestamp: Sun May 18 2025 17:16:05 GMT+0200 (Central European Summer Time)
 
+URL: /documentation
+Timestamp: Sun May 18 2025 17:27:53 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Sun May 18 2025 20:55:50 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 20:55:51 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 20:55:51 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 20:55:51 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 20:55:51 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Sun May 18 2025 20:56:00 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Sun May 18 2025 20:56:01 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Sun May 18 2025 20:56:02 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Sun May 18 2025 21:01:24 GMT+0200 (Central European Summer Time)
+
+URL: /documents
+Timestamp: Sun May 18 2025 21:01:31 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun May 18 2025 21:01:31 GMT+0200 (Central European Summer Time)
+
+URL: /server.js
+Timestamp: Sun May 18 2025 21:01:31 GMT+0200 (Central European Summer Time)
+
+URL: /main.js
+Timestamp: Sun May 18 2025 21:01:31 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 18 2025 21:01:31 GMT+0200 (Central European Summer Time)
+
