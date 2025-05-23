@@ -1,19 +1,31 @@
 const express = require("express");
 const app = express();
-const http = require("http"),
-  url = require("url");
 
-http
-  .createServer((request, response) => {
-    let requestURL = url.parse(request.url, true);
-    if (requestURL.pathname == "/documentation.html") {
-      response.writeHead(200, { "Content-Type": "text/plain" });
-      response.end("Documentation on the bookclub API.\n");
-    } else {
-      response.writeHead(200, { "Content-Type": "text/plain" });
-      response.end("Welcome to my book club!\n");
-    }
-  })
-  .listen(8080);
+let myLogger = (req, res, next) => {
+  console.log(req.url);
+  next();
+};
 
-console.log("My first Node test server is running on Port 8080.");
+let requestTime = (req, res, next) => {
+  req.requestTime = Date.now();
+  next();
+};
+
+app.use(myLogger);
+app.use(requestTime);
+
+app.get("/", (req, res) => {
+  let responseText = "Welcome to my app!";
+  responseText += "<small>Requested at: " + req.requestTime + "</small>";
+  res.send(responseText);
+});
+
+app.get("/secreturl", (req, res) => {
+  let responseText = "This is a secret url with super top-secret content.";
+  responseText += "<small>Requested at: " + req.requestTime + "</small>";
+  res.send(responseText);
+});
+
+app.listen(8080, () => {
+  console.log("Your app is listening on port 8080.");
+});
