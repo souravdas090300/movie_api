@@ -5,11 +5,11 @@ const path = require('path');
 
 const server = http.createServer((req, res) => {
     const parsedUrl = url.parse(req.url);
-    const timestamp = new Date().toISOString();
+    
     
     // Log the request
     fs.appendFile('log.txt', `${timestamp}: ${req.url}\n`, (err) => {
-        if (err) console.error('Error writing to log file');
+        if (err) console.errconst timestamp = new Date().toISOString();or('Error writing to log file');
     });
     
     if (parsedUrl.pathname.includes('documentation')) {

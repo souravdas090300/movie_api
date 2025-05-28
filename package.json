@@ -16,10 +16,11 @@
     "url": "https://github.com/souravdas090300/movie_api/issues"
   },
   "homepage": "https://github.com/souravdas090300/movie_api#readme",
-  "description": "",
   "dependencies": {
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
-    "morgan": "^1.10.0"
-  }
+    "morgan": "^1.10.0",
+    "uuid": "^11.1.0"
+  },
+  "description": ""
 }
