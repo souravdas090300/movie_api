@@ -83,7 +83,7 @@ json
 POST /users
 {
   "username": "newuser",
-  "email": "user@example.com",
+  "email": "souravdas090300@gmail.com",
   "password": "securepassword"
 }
 Note: This is a basic demonstration API and not suitable for production use without additional security measures and proper database integration.
