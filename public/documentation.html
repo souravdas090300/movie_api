@@ -81,8 +81,16 @@
           <td>
             Returns JSON array of all movies
             <div class="json-example">
-              [ { "id": "1a2b3c4d", "title": "The Shawshank Redemption", "year":
-              1994, "director": "Frank Darabont", "genre": "Drama" }, ... ]
+              [ { "Title": "Fantasy Island", "ReleaseYear": 2020, "Description":
+              "The enigmatic Mr. Roarke makes the secret dreams of his lucky
+              guests come true at a luxurious but remote tropical resort.",
+              "Genre": { "Name": "Fantasy", "Description": "Fantasy films are
+              films that belong to the fantasy genre with fantastic themes..."
+              }, "Director": { "Name": "Jeff Wadlow", "Bio": "American film
+              director, producer, and screenwriter...", "Birth": "1976-07-23",
+              "Death": null }, "Actors": ["Michael Peña", "Maggie Q"],
+              "Actresses": ["Lucy Hale", "Portia Doubleday"], "ImagePath":
+              "fantasyisland.png", "Featured": true, "IMDbRating": 4.9 }, ... ]
             </div>
           </td>
         </tr>
@@ -95,40 +103,119 @@
           <td>
             Returns JSON object with movie details
             <div class="json-example">
-              { "id": "1a2b3c4d", "title": "The Shawshank Redemption", "year":
-              1994, "director": "Frank Darabont", "genre": "Drama" }
+              { "Title": "The Prestige", "ReleaseYear": 2006, "Description":
+              "After a tragic accident, two stage magicians engage in a battle
+              to create the ultimate illusion...", "Genre": { "Name": "Drama",
+              "Description": "Drama film is a genre that relies on the emotional
+              and relational development of realistic characters." },
+              "Director": { "Name": "Christopher Nolan", "Bio":
+              "British-American film director, producer, and screenwriter...",
+              "Birth": "1970-07-30", "Death": null }, "Actors": ["Christian
+              Bale", "Hugh Jackman"], "Actresses": ["Scarlett Johansson"],
+              "ImagePath": "theprestige.png", "Featured": true, "IMDbRating":
+              8.5 }
             </div>
             or 404 if not found
           </td>
         </tr>
         <tr>
           <td>Get movies by genre</td>
-          <td><code>/genres/:name</code></td>
+          <td><code>/genres/:name/movies</code></td>
           <td>GET</td>
           <td><code>:name</code> - Genre name (string)</td>
           <td>None</td>
           <td>
             Returns JSON array of movies in specified genre
             <div class="json-example">
-              [ { "id": "1a2b3c4d", "title": "The Shawshank Redemption", "year":
-              1994, "director": "Frank Darabont", "genre": "Drama" }, ... ]
+              [ { "Title": "Fantasy Island", "ReleaseYear": 2020, "Description":
+              "The enigmatic Mr. Roarke makes the secret dreams of his lucky
+              guests come true...", "Genre": { "Name": "Fantasy", "Description":
+              "Fantasy films are films that belong to the fantasy genre..." },
+              ... }, { "Title": "Harry Potter and the Philosopher's Stone",
+              "ReleaseYear": 2001, "Description": "An orphaned boy enrolls in a
+              school of wizardry...", "Genre": { "Name": "Fantasy",
+              "Description": "Fantasy films are films that belong to the fantasy
+              genre..." }, ... } ]
+            </div>
+            or 404 if genre not found
+          </td>
+        </tr>
+        <tr>
+          <td>Get genre details</td>
+          <td><code>/genres/:name</code></td>
+          <td>GET</td>
+          <td><code>:name</code> - Genre name (string)</td>
+          <td>None</td>
+          <td>
+            Returns JSON object with genre details
+            <div class="json-example">
+              { "Name": "Fantasy", "Description": "Fantasy films are films that
+              belong to the fantasy genre with fantastic themes, usually
+              involving magic, supernatural events, mythology, folklore, or
+              exotic fantasy worlds." }
             </div>
             or 404 if genre not found
           </td>
         </tr>
         <tr>
           <td>Get movies by director</td>
-          <td><code>/directors/:name</code></td>
+          <td><code>/directors/:name/movies</code></td>
           <td>GET</td>
           <td><code>:name</code> - Director name (string)</td>
           <td>None</td>
           <td>
             Returns JSON array of movies by specified director
             <div class="json-example">
-              [ { "id": "5e6f7g8h", "title": "The Dark Knight", "year": 2008,
-              "director": "Christopher Nolan", "genre": "Action" }, ... ]
+              [ { "Title": "The Prestige", "ReleaseYear": 2006, "Description":
+              "After a tragic accident, two stage magicians engage in a
+              battle...", "Genre": { "Name": "Drama", "Description": "Drama film
+              is a genre that relies on the emotional..." }, "Director": {
+              "Name": "Christopher Nolan", "Bio": "British-American film
+              director, producer, and screenwriter...", "Birth": "1970-07-30",
+              "Death": null }, ... }, { "Title": "Tenet", "ReleaseYear": 2020,
+              "Description": "Armed with only one word, Tenet, and fighting for
+              the survival of the entire world...", "Genre": { "Name": "Sci-Fi",
+              "Description": "Science fiction film is a genre that uses
+              speculative..." }, "Director": { "Name": "Christopher Nolan",
+              "Bio": "British-American film director, producer, and
+              screenwriter...", "Birth": "1970-07-30", "Death": null }, ... } ]
             </div>
             or 404 if director not found
+          </td>
+        </tr>
+        <tr>
+          <td>Get director details</td>
+          <td><code>/directors/:name</code></td>
+          <td>GET</td>
+          <td><code>:name</code> - Director name (string)</td>
+          <td>None</td>
+          <td>
+            Returns JSON object with director details
+            <div class="json-example">
+              { "Name": "Christopher Nolan", "Bio": "British-American film
+              director, producer, and screenwriter. His films have grossed more
+              than $5 billion worldwide.", "Birth": "1970-07-30", "Death": null
+              }
+            </div>
+            or 404 if director not found
+          </td>
+        </tr>
+        <tr>
+          <td>Get featured movies</td>
+          <td><code>/movies/featured</code></td>
+          <td>GET</td>
+          <td>None</td>
+          <td>None</td>
+          <td>
+            Returns JSON array of featured movies
+            <div class="json-example">
+              [ { "Title": "Fantasy Island", "ReleaseYear": 2020, "Description":
+              "The enigmatic Mr. Roarke makes the secret dreams of his lucky
+              guests come true...", "Featured": true, ... }, { "Title": "The
+              Prestige", "ReleaseYear": 2006, "Description": "After a tragic
+              accident, two stage magicians engage in a battle...", "Featured":
+              true, ... } ]
+            </div>
           </td>
         </tr>
       </tbody>
@@ -148,6 +235,39 @@
       </thead>
       <tbody>
         <tr>
+          <td>Get all users</td>
+          <td><code>/users</code></td>
+          <td>GET</td>
+          <td>None</td>
+          <td>None</td>
+          <td>
+            Returns JSON array of all users (without passwords)
+            <div class="json-example">
+              [ { "Name": "John Doe", "UserID": "john123", "Email":
+              "john.doe@example.com", "BirthDate": "1985-05-15",
+              "FavoriteMovies": [ "5f8d3b7e9c2a1d4f6e8b2c1a",
+              "5f8d3b7e9c2a1d4f6e8b2c1b", "5f8d3b7e9c2a1d4f6e8b2c1c" ] }, ... ]
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Get user by username</td>
+          <td><code>/users/:UserID</code></td>
+          <td>GET</td>
+          <td><code>:UserID</code> - User ID (string)</td>
+          <td>None</td>
+          <td>
+            Returns JSON object with user details (without password)
+            <div class="json-example">
+              { "Name": "John Doe", "UserID": "john123", "Email":
+              "john.doe@example.com", "BirthDate": "1985-05-15",
+              "FavoriteMovies": [ "5f8d3b7e9c2a1d4f6e8b2c1a",
+              "5f8d3b7e9c2a1d4f6e8b2c1b", "5f8d3b7e9c2a1d4f6e8b2c1c" ] }
+            </div>
+            or 404 if not found
+          </td>
+        </tr>
+        <tr>
           <td>Register new user</td>
           <td><code>/users</code></td>
           <td>POST</td>
@@ -155,85 +275,133 @@
           <td>
             JSON object with user details
             <div class="json-example">
-              { "username": "johndoe", "email": "john@example.com", "password":
-              "securepassword123" }
+              { "Name": "New User", "UserID": "newuser123", "Password":
+              "securepassword123", "Email": "new.user@example.com", "BirthDate":
+              "1990-01-01" }
             </div>
           </td>
           <td>
-            Returns JSON object with created user (including generated ID)
+            Returns JSON object with created user (without password)
             <div class="json-example">
-              { "id": "9i0j1k2l", "username": "johndoe", "email":
-              "john@example.com", "favoriteMovies": [] }
+              { "Name": "New User", "UserID": "newuser123", "Email":
+              "new.user@example.com", "BirthDate": "1990-01-01",
+              "FavoriteMovies": [] }
             </div>
             or 400 if validation fails
           </td>
         </tr>
         <tr>
           <td>Update user info</td>
-          <td><code>/users/:username</code></td>
+          <td><code>/users/:UserID</code></td>
           <td>PUT</td>
-          <td><code>:username</code> - Username to update (string)</td>
+          <td><code>:UserID</code> - User ID to update (string)</td>
           <td>
             JSON object with fields to update
             <div class="json-example">
-              { "email": "newemail@example.com", "password": "newpassword456" }
+              { "Email": "updated.email@example.com", "BirthDate": "1990-01-02"
+              }
             </div>
           </td>
           <td>
             Returns JSON object with updated user
             <div class="json-example">
-              { "id": "9i0j1k2l", "username": "johndoe", "email":
-              "newemail@example.com", "favoriteMovies": [] }
+              { "Name": "New User", "UserID": "newuser123", "Email":
+              "updated.email@example.com", "BirthDate": "1990-01-02",
+              "FavoriteMovies": [] }
             </div>
             or 404 if user not found
           </td>
         </tr>
         <tr>
           <td>Add movie to favorites</td>
-          <td><code>/users/:username/movies/:movieID</code></td>
+          <td><code>/users/:UserID/movies/:MovieID</code></td>
           <td>POST</td>
           <td>
-            <code>:username</code> - Username (string)<br />
-            <code>:movieID</code> - Movie ID (UUID)
+            <code>:UserID</code> - User ID (string)<br />
+            <code>:MovieID</code> - Movie ID (ObjectId)
           </td>
           <td>None</td>
           <td>
             Returns JSON object with updated user
             <div class="json-example">
-              { "id": "9i0j1k2l", "username": "johndoe", "email":
-              "john@example.com", "favoriteMovies": ["1a2b3c4d"] }
+              { "Name": "John Doe", "UserID": "john123", "Email":
+              "john.doe@example.com", "BirthDate": "1985-05-15",
+              "FavoriteMovies": [ "5f8d3b7e9c2a1d4f6e8b2c1a",
+              "5f8d3b7e9c2a1d4f6e8b2c1b", "5f8d3b7e9c2a1d4f6e8b2c1c",
+              "5f8d3b7e9c2a1d4f6e8b2c1d" ] }
             </div>
             or 404 if user/movie not found
           </td>
         </tr>
         <tr>
           <td>Remove movie from favorites</td>
-          <td><code>/users/:username/movies/:movieID</code></td>
+          <td><code>/users/:UserID/movies/:MovieID</code></td>
           <td>DELETE</td>
           <td>
-            <code>:username</code> - Username (string)<br />
-            <code>:movieID</code> - Movie ID (UUID)
+            <code>:UserID</code> - User ID (string)<br />
+            <code>:MovieID</code> - Movie ID (ObjectId)
           </td>
           <td>None</td>
           <td>
             Returns JSON object with updated user
             <div class="json-example">
-              { "id": "9i0j1k2l", "username": "johndoe", "email":
-              "john@example.com", "favoriteMovies": [] }
+              { "Name": "John Doe", "UserID": "john123", "Email":
+              "john.doe@example.com", "BirthDate": "1985-05-15",
+              "FavoriteMovies": [ "5f8d3b7e9c2a1d4f6e8b2c1a",
+              "5f8d3b7e9c2a1d4f6e8b2c1b", "5f8d3b7e9c2a1d4f6e8b2c1c" ] }
             </div>
             or 404 if user/movie not found
           </td>
         </tr>
         <tr>
           <td>Deregister user</td>
-          <td><code>/users/:username</code></td>
+          <td><code>/users/:UserID</code></td>
           <td>DELETE</td>
-          <td><code>:username</code> - Username to delete (string)</td>
+          <td><code>:UserID</code> - User ID to delete (string)</td>
           <td>None</td>
           <td>
             Confirmation message
-            <div class="json-example">"User johndoe was deregistered"</div>
+            <div class="json-example">"User john123 was deregistered"</div>
             or 404 if user not found
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Authentication Endpoints</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Endpoint</th>
+          <th>Method</th>
+          <th>Parameters</th>
+          <th>Request Body</th>
+          <th>Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>User login</td>
+          <td><code>/login</code></td>
+          <td>POST</td>
+          <td>None</td>
+          <td>
+            JSON object with credentials
+            <div class="json-example">
+              { "UserID": "john123", "Password": "password123" }
+            </div>
+          </td>
+          <td>
+            Returns JSON object with user details and JWT token
+            <div class="json-example">
+              { "user": { "Name": "John Doe", "UserID": "john123", "Email":
+              "john.doe@example.com", "BirthDate": "1985-05-15",
+              "FavoriteMovies": [ "5f8d3b7e9c2a1d4f6e8b2c1a",
+              "5f8d3b7e9c2a1d4f6e8b2c1b", "5f8d3b7e9c2a1d4f6e8b2c1c" ] },
+              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }
+            </div>
+            or 401 if unauthorized
           </td>
         </tr>
       </tbody>
