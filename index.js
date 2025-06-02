@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(morgan("common"));
 app.use(express.static("public"));
 
-// Movies data with image URLs
+// Movies data with image URLs, descriptions, and features
 const top10Movies = [
   {
     id: uuid.v4(),
@@ -18,7 +18,15 @@ const top10Movies = [
     director: "Frank Darabont",
     genre: "Drama",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg",
+      "https://c8.alamy.com/comp/2JH2MYR/robbinsposter-the-shawshank-redemption-1994-2JH2MYR.jpg",
+    description:
+      "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+    features: [
+      "Based on Stephen King novella",
+      "IMDb Top Rated #1",
+      "Prison escape theme",
+      "Tim Robbins and Morgan Freeman star",
+    ],
   },
   {
     id: uuid.v4(),
@@ -27,7 +35,15 @@ const top10Movies = [
     director: "Francis Ford Coppola",
     genre: "Crime",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+      "https://media.newyorker.com/photos/594044d90c240c2a1fd678ce/master/pass/970324_ra409.jpg",
+    description:
+      "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+    features: [
+      "Marlon Brando's iconic performance",
+      "Academy Award winner",
+      "Mafia family saga",
+      "Part of trilogy",
+    ],
   },
   {
     id: uuid.v4(),
@@ -36,7 +52,15 @@ const top10Movies = [
     director: "Christopher Nolan",
     genre: "Action",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg",
+      "https://images.moviesanywhere.com/bd47f9b7d090170d79b3085804075d41/c6140695-a35f-46e2-adb7-45ed829fc0c0.jpg",
+    description:
+      "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+    features: [
+      "Heath Ledger's Oscar-winning Joker",
+      "IMAX filming techniques",
+      "Complex villain psychology",
+      "Sequel to Batman Begins",
+    ],
   },
   {
     id: uuid.v4(),
@@ -45,7 +69,15 @@ const top10Movies = [
     director: "Quentin Tarantino",
     genre: "Crime",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+      "https://alternativemovieposters.com/wp-content/uploads/2021/04/RuizBurgos_PulpFiction.jpg",
+    description:
+      "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+    features: [
+      "Non-linear storytelling",
+      "Iconic dialogue",
+      "Cult following",
+      "Palme d'Or winner",
+    ],
   },
   {
     id: uuid.v4(),
@@ -54,7 +86,15 @@ const top10Movies = [
     director: "Robert Zemeckis",
     genre: "Drama",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
+      "https://shatpod.com/movies/wp-content/uploads/Forrest-Gump-Movie-Poster-1994.jpg",
+    description:
+      "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man with an IQ of 75.",
+    features: [
+      "Tom Hanks Oscar winner",
+      "Historical fiction",
+      "Special effects breakthroughs",
+      "Heartwarming story",
+    ],
   },
   {
     id: uuid.v4(),
@@ -63,7 +103,15 @@ const top10Movies = [
     director: "Christopher Nolan",
     genre: "Sci-Fi",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg",
+      "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
+    description:
+      "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+    features: [
+      "Dream within a dream concept",
+      "Practical effects",
+      "Hans Zimmer score",
+      "Open-ended conclusion",
+    ],
   },
   {
     id: uuid.v4(),
@@ -72,7 +120,15 @@ const top10Movies = [
     director: "Lana & Lilly Wachowski",
     genre: "Sci-Fi",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnpjdxi3kHUI9rTqML8O_7_Ve87-FHFNlLHg&s",
+    description:
+      "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+    features: [
+      "Groundbreaking bullet time effects",
+      "Philosophical themes",
+      "Cyberpunk aesthetic",
+      "Keanu Reeves star vehicle",
+    ],
   },
   {
     id: uuid.v4(),
@@ -81,7 +137,15 @@ const top10Movies = [
     director: "Bong Joon Ho",
     genre: "Thriller",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg",
+      "https://m.media-amazon.com/images/M/MV5BYjk1Y2U4MjQtY2ZiNS00OWQyLWI3MmYtZWUwNmRjYWRiNWNhXkEyXkFqcGc@._V1_.jpg",
+    description:
+      "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+    features: [
+      "First Korean Palme d'Or winner",
+      "Social commentary",
+      "Genre-blending",
+      "Academy Award Best Picture",
+    ],
   },
   {
     id: uuid.v4(),
@@ -90,7 +154,15 @@ const top10Movies = [
     director: "Christopher Nolan",
     genre: "Sci-Fi",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
+      "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p10543523_p_v8_as.jpg",
+    description:
+      "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+    features: [
+      "Scientific accuracy consulted by Kip Thorne",
+      "Emotional father-daughter story",
+      "Practical effects for space scenes",
+      "Hans Zimmer organ score",
+    ],
   },
   {
     id: uuid.v4(),
@@ -99,7 +171,15 @@ const top10Movies = [
     director: "Peter Jackson",
     genre: "Fantasy",
     imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+      "https://upload.wikimedia.org/wikipedia/en/4/48/Lord_Rings_Return_King.jpg",
+    description:
+      "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+    features: [
+      "11 Academy Awards",
+      "Epic battle scenes",
+      "Conclusion to trilogy",
+      "Extensive practical and digital effects",
+    ],
   },
 ];
 
