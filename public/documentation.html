@@ -3,52 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Database API Documentation</title>
+    <title>myFlix API Documentation</title>
     <style>
       body {
         font-family: Arial, sans-serif;
         line-height: 1.6;
-        max-width: 900px;
-        margin: 0 auto;
+        margin: 0;
         padding: 20px;
         color: #333;
+        max-width: 1200px;
+        margin: auto;
       }
       h1,
-      h2 {
+      h2,
+      h3 {
         color: #2c3e50;
       }
-      .endpoint {
-        background-color: #f8f9fa;
+      h1 {
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+      h2 {
+        margin-top: 30px;
         border-left: 4px solid #3498db;
-        padding: 15px;
-        margin: 20px 0;
-        border-radius: 0 4px 4px 0;
-      }
-      .method {
-        display: inline-block;
-        padding: 3px 10px;
-        border-radius: 3px;
-        font-weight: bold;
-        color: white;
-        margin-right: 10px;
-      }
-      .get {
-        background-color: #2ecc71;
-      }
-      .post {
-        background-color: #3498db;
-      }
-      .put {
-        background-color: #f39c12;
-      }
-      .delete {
-        background-color: #e74c3c;
-      }
-      code {
-        background-color: #eee;
-        padding: 2px 5px;
-        border-radius: 3px;
-        font-family: monospace;
+        padding-left: 10px;
       }
       table {
         width: 100%;
@@ -58,264 +36,258 @@
       th,
       td {
         border: 1px solid #ddd;
-        padding: 8px;
+        padding: 12px;
         text-align: left;
       }
       th {
         background-color: #f2f2f2;
       }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+      .method-get {
+        color: #2ecc71;
+      }
+      .method-post {
+        color: #3498db;
+      }
+      .method-put {
+        color: #f39c12;
+      }
+      .method-delete {
+        color: #e74c3c;
+      }
+      .endpoint {
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
-    <h1>Movie Database API Documentation</h1>
+    <h1>myFlix API Documentation</h1>
+
     <p>
-      This API allows you to interact with our movie database containing
-      information about films, directors, and user preferences.
+      The myFlix API is a RESTful web service that provides access to
+      information about movies, directors, and genres. Users can create
+      accounts, update their personal information, and create lists of their
+      favorite movies.
     </p>
 
-    <h2>Base URL</h2>
-    <p><code>https://api.moviedatabase.com/v1</code></p>
+    <h2>API Endpoints</h2>
 
-    <h2>Authentication</h2>
-    <p>
-      All endpoints require authentication via JWT token in the Authorization
-      header.
-    </p>
+    <h3>Movies</h3>
 
-    <h2>Movies Endpoints</h2>
-
-    <div class="endpoint">
-      <span class="method get">GET</span>
-      <strong>/movies</strong>
-      <p>Get all movies in the database</p>
-      <p><strong>Response:</strong> Array of movie objects</p>
-    </div>
-
-    <div class="endpoint">
-      <span class="method get">GET</span>
-      <strong>/movies/:title</strong>
-      <p>Get a specific movie by title</p>
-      <p><strong>Parameters:</strong> title (string)</p>
-      <p><strong>Response:</strong> Movie object</p>
-    </div>
-
-    <div class="endpoint">
-      <span class="method get">GET</span>
-      <strong>/movies/genre/:genreName</strong>
-      <p>Get movies by genre</p>
-      <p><strong>Parameters:</strong> genreName (string)</p>
-      <p><strong>Response:</strong> Array of movie objects</p>
-    </div>
-
-    <div class="endpoint">
-      <span class="method get">GET</span>
-      <strong>/movies/director/:directorName</strong>
-      <p>Get movies by director</p>
-      <p><strong>Parameters:</strong> directorName (string)</p>
-      <p><strong>Response:</strong> Array of movie objects with director bio</p>
-    </div>
-
-    <h2>Users Endpoints</h2>
-
-    <div class="endpoint">
-      <span class="method post">POST</span>
-      <strong>/users</strong>
-      <p>Register a new user</p>
-      <p><strong>Request Body:</strong></p>
-      <pre>
-{
-    "username": "string",
-    "email": "string",
-    "password": "string"
-}</pre
-      >
-      <p>
-        <strong>Response:</strong> Newly created user object (without password)
-      </p>
-    </div>
-
-    <div class="endpoint">
-      <span class="method put">PUT</span>
-      <strong>/users/:username</strong>
-      <p>Update user information</p>
-      <p><strong>Parameters:</strong> username (string)</p>
-      <p><strong>Request Body:</strong> Fields to update</p>
-      <p><strong>Response:</strong> Updated user object</p>
-    </div>
-
-    <div class="endpoint">
-      <span class="method post">POST</span>
-      <strong>/users/:username/favorites</strong>
-      <p>Add a movie to user's favorites</p>
-      <p><strong>Parameters:</strong> username (string)</p>
-      <p><strong>Request Body:</strong></p>
-      <pre>
-{
-    "movieTitle": "string"
-}</pre
-      >
-      <p><strong>Response:</strong> Updated user object</p>
-    </div>
-
-    <div class="endpoint">
-      <span class="method delete">DELETE</span>
-      <strong>/users/:username/favorites/:movieTitle</strong>
-      <p>Remove a movie from user's favorites</p>
-      <p><strong>Parameters:</strong> username (string), movieTitle (string)</p>
-      <p><strong>Response:</strong> Updated user object</p>
-    </div>
-
-    <div class="endpoint">
-      <span class="method delete">DELETE</span>
-      <strong>/users/:username</strong>
-      <p>Delete a user account</p>
-      <p><strong>Parameters:</strong> username (string)</p>
-      <p><strong>Response:</strong> Confirmation message</p>
-    </div>
-
-    <h2>Data Structures</h2>
-
-    <h3>Movie Object</h3>
     <table>
-      <tr>
-        <th>Field</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-      <tr>
-        <td>title</td>
-        <td>String</td>
-        <td>Title of the movie</td>
-      </tr>
-      <tr>
-        <td>genre</td>
-        <td>String</td>
-        <td>Primary genre(s)</td>
-      </tr>
-      <tr>
-        <td>genreDescription</td>
-        <td>String</td>
-        <td>Description of the genre</td>
-      </tr>
-      <tr>
-        <td>director</td>
-        <td>String</td>
-        <td>Director's name</td>
-      </tr>
-      <tr>
-        <td>directorBio</td>
-        <td>String</td>
-        <td>Biography of the director</td>
-      </tr>
-      <tr>
-        <td>actors</td>
-        <td>Array</td>
-        <td>List of actors</td>
-      </tr>
-      <tr>
-        <td>actresses</td>
-        <td>Array</td>
-        <td>List of actresses</td>
-      </tr>
-      <tr>
-        <td>releaseYear</td>
-        <td>Number</td>
-        <td>Year of release</td>
-      </tr>
-      <tr>
-        <td>description</td>
-        <td>String</td>
-        <td>Plot description</td>
-      </tr>
-      <tr>
-        <td>imdbRating</td>
-        <td>Number</td>
-        <td>IMDb rating (0-10)</td>
-      </tr>
-      <tr>
-        <td>imageURL</td>
-        <td>String</td>
-        <td>URL to movie poster</td>
-      </tr>
-      <tr>
-        <td>featured</td>
-        <td>Boolean</td>
-        <td>Whether movie is featured</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Endpoint</th>
+          <th>Description</th>
+          <th>Request Format</th>
+          <th>Response Format</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="method-get">GET</td>
+          <td class="endpoint">/movies</td>
+          <td>Returns a list of all movies</td>
+          <td>None</td>
+          <td>JSON array of movie objects</td>
+        </tr>
+        <tr>
+          <td class="method-get">GET</td>
+          <td class="endpoint">/movies/:title</td>
+          <td>Returns data about a single movie by title</td>
+          <td>None</td>
+          <td>JSON movie object</td>
+        </tr>
+        <tr>
+          <td class="method-get">GET</td>
+          <td class="endpoint">/movies/:title/image</td>
+          <td>Returns the image URL for a movie</td>
+          <td>None</td>
+          <td>JSON object with imageUrl property</td>
+        </tr>
+        <tr>
+          <td class="method-get">GET</td>
+          <td class="endpoint">/genres/:name</td>
+          <td>Returns data about a genre by name</td>
+          <td>None</td>
+          <td>JSON array of movies in the genre</td>
+        </tr>
+        <tr>
+          <td class="method-get">GET</td>
+          <td class="endpoint">/directors/:name</td>
+          <td>Returns data about a director by name</td>
+          <td>None</td>
+          <td>JSON director object</td>
+        </tr>
+      </tbody>
     </table>
 
-    <h3>User Object</h3>
+    <h3>Users</h3>
+
     <table>
-      <tr>
-        <th>Field</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-      <tr>
-        <td>username</td>
-        <td>String</td>
-        <td>Unique username</td>
-      </tr>
-      <tr>
-        <td>email</td>
-        <td>String</td>
-        <td>User's email address</td>
-      </tr>
-      <tr>
-        <td>password</td>
-        <td>String</td>
-        <td>Hashed password (not returned in responses)</td>
-      </tr>
-      <tr>
-        <td>favoriteMovies</td>
-        <td>Array</td>
-        <td>List of favorite movie titles</td>
-      </tr>
-      <tr>
-        <td>createdAt</td>
-        <td>Date</td>
-        <td>Account creation timestamp</td>
-      </tr>
-      <tr>
-        <td>updatedAt</td>
-        <td>Date</td>
-        <td>Last update timestamp</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Endpoint</th>
+          <th>Description</th>
+          <th>Request Format</th>
+          <th>Response Format</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="method-post">POST</td>
+          <td class="endpoint">/users</td>
+          <td>Allows new users to register</td>
+          <td>JSON object with Username, Password, Email, Birthday</td>
+          <td>JSON object with created user data</td>
+        </tr>
+        <tr>
+          <td class="method-get">GET</td>
+          <td class="endpoint">/users/:Username</td>
+          <td>Returns user data by username</td>
+          <td>None</td>
+          <td>JSON user object</td>
+        </tr>
+        <tr>
+          <td class="method-put">PUT</td>
+          <td class="endpoint">/users/:Username</td>
+          <td>Allows users to update their info</td>
+          <td>
+            JSON object with updated fields (Username, Password, Email,
+            Birthday)
+          </td>
+          <td>JSON object with updated user data</td>
+        </tr>
+        <tr>
+          <td class="method-post">POST</td>
+          <td class="endpoint">/users/:Username/movies/:MovieID</td>
+          <td>Adds a movie to user's favorites</td>
+          <td>None</td>
+          <td>JSON object with updated user data</td>
+        </tr>
+        <tr>
+          <td class="method-delete">DELETE</td>
+          <td class="endpoint">/users/:Username/movies/:MovieID</td>
+          <td>Removes a movie from user's favorites</td>
+          <td>None</td>
+          <td>JSON object with updated user data</td>
+        </tr>
+        <tr>
+          <td class="method-delete">DELETE</td>
+          <td class="endpoint">/users/:Username</td>
+          <td>Deletes a user by username</td>
+          <td>None</td>
+          <td>Text confirmation message</td>
+        </tr>
+      </tbody>
     </table>
 
     <h2>Example Requests</h2>
 
-    <h3>Get Movies by Genre</h3>
+    <h3>Get All Movies</h3>
+    <p><strong>Request:</strong></p>
+    <code>GET /movies</code>
+
+    <p><strong>Response:</strong></p>
     <pre>
-GET /movies/genre/Science%20Fiction
-Headers:
-    Authorization: Bearer &lt;your_token&gt;</pre
-    >
+[
+    {
+        "Title": "Inception",
+        "Description": "A thief who steals corporate secrets...",
+        "Genre": {
+            "Name": "Sci-Fi",
+            "Description": "Science fiction films..."
+        },
+        "Director": {
+            "Name": "Christopher Nolan",
+            "Bio": "Christopher Nolan is a British-American film director...",
+            "Birth": "1970-07-30"
+        },
+        "ImagePath": "inception.jpg",
+        "Featured": true
+    },
+    ...
+]
+    </pre>
+
+    <h3>Register a New User</h3>
+    <p><strong>Request:</strong></p>
+    <code>POST /users</code>
+    <pre>
+{
+    "Username": "johndoe",
+    "Password": "securepassword123",
+    "Email": "john@example.com",
+    "Birthday": "1990-01-01"
+}
+    </pre>
+
+    <p><strong>Response:</strong></p>
+    <pre>
+{
+    "Username": "johndoe",
+    "Password": "securepassword123",
+    "Email": "john@example.com",
+    "Birthday": "1990-01-01T00:00:00.000Z",
+    "FavoriteMovies": [],
+    "_id": "5f9d88a3c2b6a42a24aa1234",
+    "__v": 0
+}
+    </pre>
 
     <h3>Add Movie to Favorites</h3>
+    <p><strong>Request:</strong></p>
+    <code>POST /users/johndoe/movies/5f9d88a3c2b6a42a24aa5678</code>
+
+    <p><strong>Response:</strong></p>
     <pre>
-POST /users/johnsmith/favorites
-Headers:
-    Authorization: Bearer &lt;your_token&gt;
-    Content-Type: application/json
-
-Body:
 {
-    "movieTitle": "Titanic"
-}</pre
-    >
+    "Username": "johndoe",
+    "Password": "securepassword123",
+    "Email": "john@example.com",
+    "Birthday": "1990-01-01T00:00:00.000Z",
+    "FavoriteMovies": ["5f9d88a3c2b6a42a24aa5678"],
+    "_id": "5f9d88a3c2b6a42a24aa1234",
+    "__v": 0
+}
+    </pre>
 
-    <h3>Update Director Bio</h3>
-    <pre>
-PUT /movies/director/James%20Cameron
-Headers:
-    Authorization: Bearer &lt;your_token&gt;
-    Content-Type: application/json
+    <h2>Technical Requirements</h2>
+    <ul>
+      <li>The API is a Node.js and Express application</li>
+      <li>Uses MongoDB for data storage with Mongoose for object modeling</li>
+      <li>
+        Includes middleware:
+        <ul>
+          <li><code>morgan</code> for logging</li>
+          <li><code>body-parser</code> for request body parsing</li>
+        </ul>
+      </li>
+      <li>Responds with appropriate status codes and error messages</li>
+      <li>Server runs on port 8080</li>
+    </ul>
 
-Body:
-{
-    "directorBio": "Updated bio text..."
-}</pre
-    >
+    <h2>Getting Started</h2>
+    <ol>
+      <li>Clone the repository</li>
+      <li>Install dependencies: <code>npm install</code></li>
+      <li>Ensure MongoDB is running locally on port 27017</li>
+      <li>Start the server: <code>node index.js</code></li>
+      <li>Access the API at <code>http://localhost:8080</code></li>
+    </ol>
+
+    <footer>
+      <p>© 2023 myFlix API. All rights reserved.</p>
+    </footer>
   </body>
 </html>
