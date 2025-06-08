@@ -41,6 +41,18 @@ app.get("/movies", (req, res) => {
     });
 });
 
+// Return all users from MongoDB
+app.get("/users", (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
+});
+
 // Get a movie by title from MongoDB
 app.get("/movies/:title", (req, res) => {
   Movies.findOne({ Title: req.params.title })
