@@ -41,11 +41,47 @@ app.get("/movies", (req, res) => {
     });
 });
 
-// Return all users from MongoDB
-app.get("/users", (req, res) => {
-  Users.find()
-    .then((users) => {
-      res.status(200).json(users);
+// Return all genres from MongoDB
+app.get("/genres", (req, res) => {
+  Movies.distinct("Genre.Name")
+    .then((genres) => {
+      res.status(200).json(genres);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
+});
+
+// Return all directors from MongoDB
+app.get("/directors", (req, res) => {
+  Movies.distinct("Director.Name")
+    .then((directors) => {
+      res.status(200).json(directors);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
+});
+
+// Return all actors from MongoDB
+app.get("/actors", (req, res) => {
+  Movies.distinct("Actors")
+    .then((actors) => {
+      res.status(200).json(actors);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
+});
+
+// Return all actresses from MongoDB
+app.get("/actresses", (req, res) => {
+  Movies.distinct("Actresses")
+    .then((actresses) => {
+      res.status(200).json(actresses);
     })
     .catch((error) => {
       console.error(error);
@@ -116,6 +152,18 @@ app.get("/directors/:name", (req, res) => {
 
 // === USER ROUTES (MongoDB) ===
 
+// Return all users from MongoDB
+app.get("/users", (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
+});
+
 // Register a new user
 app.post("/users", async (req, res) => {
   await Users.findOne({ Username: req.body.Username })
@@ -124,10 +172,10 @@ app.post("/users", async (req, res) => {
         return res.status(400).send(req.body.Username + " already exists");
       } else {
         Users.create({
-          Username: req.body.Username,
-          Password: req.body.Password,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday,
+          name: req.body.name,
+          username: req.body.username,
+          email: req.body.email,
+          password: req.body.password,
         })
           .then((user) => {
             res.status(201).json(user);
@@ -163,10 +211,10 @@ app.put("/users/:Username", async (req, res) => {
     { Username: req.params.Username },
     {
       $set: {
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday,
+        name: req.body.name,
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
       },
     },
     { new: true }
