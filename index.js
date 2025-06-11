@@ -167,6 +167,7 @@ app.post("/users", async (req, res) => {
           Username: req.body.Username,
           Email: req.body.Email,
           Password: req.body.Password,
+          Birthday: req.body.Birthday,
         })
           .then((user) => {
             res.status(201).json(user);
