@@ -11,6 +11,28 @@ require("./passport");
 
 const app = express();
 
+const { check, validationResult } = require('express-validator');
+check([field in req.body to validate], [error message if validation fails]).[validation method]();
+check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric()
+
+
+const cors = require("cors");
+app.use(cors());
+
+// if you want only certain origins to be given access, you'll need to replace with app.use(cors()); with folloed code below.
+/* let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+})); */
+
 // Initialize auth module after app is created
 let authModule = require("./auth")(app);
 
@@ -156,17 +178,32 @@ app.get("/users", auth, async (req, res) => {
   }
 });
 
-app.post("/users", async (req, res) => {
-  await Users.findOne({ Username: req.body.Username })
+app.post("/users", 
+  [
+    check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Username', 'Username is required').notEmpty(),
+    check('Password', 'Password is required').notEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ],
+  async (req, res) => {
+    // check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    
+  let hashedPassword = Users.hashPassword(req.body.Password);
+  await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + "already exists");
+        //If the user is found, send a response that it already exists
+        return res.status(400).send(req.body.Username + " already exists");
       } else {
         Users.create({
-          Name: req.body.Name,
           Username: req.body.Username,
+          Password: hashedPassword,
           Email: req.body.Email,
-          Password: req.body.Password,
           Birthday: req.body.Birthday,
         })
           .then((user) => {
@@ -295,4 +332,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(8080, () => console.log("your app is listening on port 8080"));
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on port ' + port);
+});
