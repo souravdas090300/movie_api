@@ -11,11 +11,6 @@ require("./passport");
 
 const app = express();
 
-const { check, validationResult } = require('express-validator');
-check([field in req.body to validate], [error message if validation fails]).[validation method]();
-check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric()
-
-
 const cors = require("cors");
 app.use(cors());
 
@@ -45,10 +40,13 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
 
-mongoose.connect("mongodb://localhost:27017/myFlixDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://myFlixDBAdmin:Gq8HHYFxNVRXf8ty@cluster0.5tc0jod.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 // Authentication middleware
 const auth = passport.authenticate("jwt", { session: false });
@@ -178,12 +176,16 @@ app.get("/users", auth, async (req, res) => {
   }
 });
 
-app.post("/users", 
+app.post(
+  "/users",
   [
-    check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Username', 'Username is required').notEmpty(),
-    check('Password', 'Password is required').notEmpty(),
-    check('Email', 'Email does not appear to be valid').isEmail()
+    check(
+      "Username",
+      "Username contains non-alphanumeric characters - not allowed."
+    ).isAlphanumeric(),
+    check("Username", "Username is required").notEmpty(),
+    check("Password", "Password is required").notEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail(),
   ],
   async (req, res) => {
     // check the validation object for errors
@@ -192,34 +194,35 @@ app.post("/users",
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    
-  let hashedPassword = Users.hashPassword(req.body.Password);
-  await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
-    .then((user) => {
-      if (user) {
-        //If the user is found, send a response that it already exists
-        return res.status(400).send(req.body.Username + " already exists");
-      } else {
-        Users.create({
-          Username: req.body.Username,
-          Password: hashedPassword,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday,
-        })
-          .then((user) => {
-            res.status(201).json(user);
+
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
+      .then((user) => {
+        if (user) {
+          //If the user is found, send a response that it already exists
+          return res.status(400).send(req.body.Username + " already exists");
+        } else {
+          Users.create({
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday,
           })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send("Error: " + error);
-          });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error: " + error);
-    });
-});
+            .then((user) => {
+              res.status(201).json(user);
+            })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
 
 app.put(
   "/users/:Username",
@@ -333,6 +336,6 @@ app.use((err, req, res, next) => {
 
 // Start server
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0', () => {
-  console.log('Listening on port ' + port);
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on port " + port);
 });
