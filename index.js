@@ -40,13 +40,10 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
 
-mongoose.connect(
-  "mongodb+srv://myFlixDBAdmin:Gq8HHYFxNVRXf8ty@cluster0.5tc0jod.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Authentication middleware
 const auth = passport.authenticate("jwt", { session: false });
