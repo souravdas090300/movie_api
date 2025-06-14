@@ -14,20 +14,6 @@ const app = express();
 const cors = require("cors");
 app.use(cors());
 
-// if you want only certain origins to be given access, you'll need to replace with app.use(cors()); with folloed code below.
-/* let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-      return callback(new Error(message ), false);
-    }
-    return callback(null, true);
-  }
-})); */
-
 // Initialize auth module after app is created
 let authModule = require("./auth")(app);
 
@@ -173,8 +159,6 @@ app.get("/users", auth, async (req, res) => {
   }
 });
 
-const { check, validationResult } = require("express-validator");
-
 app.post(
   "/users",
   [
@@ -184,44 +168,48 @@ app.post(
     ).isAlphanumeric(),
     check("Username", "Username is required").notEmpty(),
     check("Password", "Password is required").notEmpty(),
+    check("Password", "Password must be at least 6 characters").isLength({
+      min: 6,
+    }),
     check("Email", "Email does not appear to be valid").isEmail(),
   ],
   async (req, res) => {
-    // check the validation object for errors
-    let errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-
-    let hashedPassword = Users.hashPassword(req.body.Password);
-    await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
-      .then((user) => {
-        if (user) {
-          //If the user is found, send a response that it already exists
-          return res.status(400).send(req.body.Username + " already exists");
-        } else {
-          Users.create({
-            Username: req.body.Username,
-            Password: hashedPassword,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday,
-          })
-            .then((user) => {
-              res.status(201).json(user);
-            })
-            .catch((error) => {
-              console.error(error);
-              res.status(500).send("Error: " + error);
-            });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(500).send("Error: " + error);
-      });
+    // ...existing code...
   }
 );
+// check the validation object for errors
+let errors = validationResult(req);
+
+if (!errors.isEmpty()) {
+  return res.status(422).json({ errors: errors.array() });
+}
+
+let hashedPassword = Users.hashPassword(req.body.Password);
+await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
+  .then((user) => {
+    if (user) {
+      //If the user is found, send a response that it already exists
+      return res.status(400).send(req.body.Username + " already exists");
+    } else {
+      Users.create({
+        Username: req.body.Username,
+        Password: hashedPassword,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday,
+      })
+        .then((user) => {
+          res.status(201).json(user);
+        })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send("Error: " + error);
+        });
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
 
 app.put(
   "/users/:Username",
