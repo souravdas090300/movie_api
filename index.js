@@ -26,13 +26,10 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
 
-mongoose
-  .connect(process.env.CONNECTION_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Authentication middleware
 const auth = passport.authenticate("jwt", { session: false });
@@ -162,19 +159,18 @@ app.get("/users", auth, async (req, res) => {
   }
 });
 
+const { check, validationResult } = require("express-validator");
+// Create a new user
 app.post(
   "/users",
   [
-    check(
-      "Username",
-      "Username contains non-alphanumeric characters - not allowed"
-    ).isAlphanumeric(),
     check("Username", "Username is required").notEmpty(),
+    check("Username", "Username must be alphanumeric").isAlphanumeric(),
     check("Password", "Password is required").notEmpty(),
     check("Password", "Password must be at least 6 characters").isLength({
       min: 6,
     }),
-    check("Email", "Email does not appear to be valid").isEmail(),
+    check("Email", "Email is not valid").isEmail(),
   ],
   async (req, res) => {
     // Check the validation object for errors
