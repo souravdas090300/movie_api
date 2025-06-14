@@ -173,12 +173,14 @@ app.get("/users", auth, async (req, res) => {
   }
 });
 
+const { check, validationResult } = require("express-validator");
+
 app.post(
   "/users",
   [
     check(
       "Username",
-      "Username contains non-alphanumeric characters - not allowed."
+      "Username contains non-alphanumeric characters - not allowed"
     ).isAlphanumeric(),
     check("Username", "Username is required").notEmpty(),
     check("Password", "Password is required").notEmpty(),
@@ -312,7 +314,7 @@ app.delete("/users/:Username", auth, async (req, res) => {
       return res.status(403).send("Not authorized to delete this user");
     }
 
-    const user = await Users.findOneAndRemove({
+    const user = await Users.findOneAndDelete({
       Username: req.params.Username,
     });
     if (!user) {
