@@ -161,6 +161,7 @@ app.get("/users", auth, async (req, res) => {
 
 const { check, validationResult } = require("express-validator");
 // Create a new user
+
 app.post(
   "/users",
   [
@@ -210,13 +211,28 @@ app.post(
 
 app.put(
   "/users/:Username",
-  passport.authenticate("jwt", { session: false }),
+  [
+    passport.authenticate("jwt", { session: false }),
+    check("Username", "Username is required").notEmpty(),
+    check("Username", "Username must be alphanumeric").isAlphanumeric(),
+    check("Password", "Password is required").notEmpty(),
+    check("Password", "Password must be at least 6 characters").isLength({
+      min: 6,
+    }),
+    check("Email", "Email is not valid").isEmail(),
+  ],
   async (req, res) => {
-    // CONDITION TO CHECK ADDED HERE
+    // Only allow user to update their own info
     if (req.user.Username !== req.params.Username) {
       return res.status(400).send("Permission denied");
     }
-    // CONDITION ENDS
+
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    // ...existing update logic...
     await Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
@@ -228,7 +244,7 @@ app.put(
         },
       },
       { new: true }
-    ) // This line makes sure that the updated document is returned
+    )
       .then((updatedUser) => {
         res.json(updatedUser);
       })
