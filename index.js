@@ -26,10 +26,13 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
 
-mongoose.connect(process.env.CONNECTION_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(process.env.CONNECTION_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 // Authentication middleware
 const auth = passport.authenticate("jwt", { session: false });
@@ -222,36 +225,47 @@ app.put(
     check("Email", "Email is not valid").isEmail(),
   ],
   async (req, res) => {
-    // Only allow user to update their own info
-    if (req.user.Username !== req.params.Username) {
-      return res.status(400).send("Permission denied");
-    }
+    try {
+      // Only allow user to update their own info
+      if (req.user.Username !== req.params.Username) {
+        return res.status(403).send("Permission denied");
+      }
 
-    let errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
+      // Validate input
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
 
-    // ...existing update logic...
-    await Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      {
-        $set: {
-          Username: req.body.Username,
-          Password: req.body.Password,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday,
+      // Hash the new password before saving
+      const hashedPassword = Users.hashPassword(req.body.Password);
+
+      // Update user
+      const updatedUser = await Users.findOneAndUpdate(
+        { Username: req.params.Username },
+        {
+          $set: {
+            Username: req.body.Username,
+            Password: hashedPassword, // Store hashed password
+            Email: req.body.Email,
+            Birthday: req.body.Birthday,
+          },
         },
-      },
-      { new: true }
-    )
-      .then((updatedUser) => {
-        res.json(updatedUser);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send("Error: " + err);
-      });
+        { new: true } // Return the updated document
+      );
+
+      if (!updatedUser) {
+        return res.status(404).send("User not found");
+      }
+
+      // Return updated user (excluding sensitive data)
+      const userObj = updatedUser.toObject();
+      delete userObj.Password;
+      res.json(userObj);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error: " + err.message);
+    }
   }
 );
 
