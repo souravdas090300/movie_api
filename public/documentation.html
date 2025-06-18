@@ -6,324 +6,671 @@
     <title>myFlix API Documentation</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
         margin: 0;
         padding: 20px;
         color: #333;
-      }
-      .container {
-        max-width: 1000px;
+        max-width: 1200px;
         margin: 0 auto;
       }
-      h1 {
+      h1,
+      h2,
+      h3 {
         color: #2c3e50;
+      }
+      h1 {
         border-bottom: 2px solid #3498db;
         padding-bottom: 10px;
+        margin-top: 0;
       }
       h2 {
-        color: #2980b9;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-left: 4px solid #3498db;
         margin-top: 30px;
       }
       .endpoint {
-        background-color: #f9f9f9;
-        border-left: 4px solid #3498db;
+        background-color: #f8f9fa;
+        border-radius: 5px;
         padding: 15px;
-        margin: 20px 0;
-        border-radius: 0 4px 4px 0;
+        margin-bottom: 25px;
+        border-left: 4px solid #2ecc71;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       }
       .method {
         display: inline-block;
-        padding: 3px 10px;
+        padding: 5px 10px;
         border-radius: 3px;
         font-weight: bold;
         margin-right: 10px;
+        font-family: monospace;
       }
       .get {
-        background-color: #2ecc71;
+        background-color: #61affe;
         color: white;
       }
       .post {
-        background-color: #3498db;
+        background-color: #49cc90;
         color: white;
       }
       .put {
-        background-color: #f39c12;
+        background-color: #fca130;
         color: white;
       }
       .delete {
-        background-color: #e74c3c;
+        background-color: #f93e3e;
         color: white;
+      }
+      code {
+        background-color: #f0f0f0;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.9em;
+      }
+      pre {
+        background-color: #282c34;
+        color: #abb2bf;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        font-size: 0.85em;
+        line-height: 1.5;
+        tab-size: 4;
       }
       table {
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       }
       th,
       td {
         border: 1px solid #ddd;
-        padding: 8px;
+        padding: 12px;
         text-align: left;
       }
       th {
         background-color: #f2f2f2;
+        font-weight: bold;
       }
-      code {
-        background-color: #f0f0f0;
-        padding: 2px 5px;
-        border-radius: 3px;
-        font-family: monospace;
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
       }
-      .response-example {
-        background-color: #f5f5f5;
-        padding: 10px;
-        border-radius: 4px;
-        margin-top: 10px;
-        overflow-x: auto;
+      .postman-result {
+        margin-top: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: #f8f8f8;
+      }
+      .postman-result h4 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .nav {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .nav a {
+        margin-right: 15px;
+        text-decoration: none;
+        color: #3498db;
+      }
+      .nav a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>myFlix API Documentation</h1>
-      <p>
-        Welcome to the myFlix API documentation. This API provides access to
-        information about movies, directors, and genres, as well as user
-        management functionality.
-      </p>
+    <h1>myFlix API Documentation</h1>
+    <p>
+      Welcome to the myFlix API documentation. This API provides access to a
+      database of movies, directors, genres, and users with full CRUD
+      functionality.
+    </p>
 
-      <h2>Base URL</h2>
-      <p><code>http://localhost:8080/</code></p>
+    <div class="nav">
+      <a href="#movies">Movies</a>
+      <a href="#genres">Genres</a>
+      <a href="#directors">Directors</a>
+      <a href="#actors">Actors/Actresses</a>
+      <a href="#users">Users</a>
+      <a href="#models">Data Models</a>
+      <a href="#database">Database</a>
+    </div>
 
-      <h2>API Endpoints</h2>
+    <h2 id="movies">Movie Endpoints</h2>
 
-      <h3>Root</h3>
-      <div class="endpoint">
-        <div><span class="method get">GET</span> <code>/</code></div>
-        <p>Welcome message and basic instructions.</p>
-        <p><strong>Response:</strong> Welcome text</p>
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/movies</code> - Get all movies</span>
+      <p>Returns a list of all movies in the database.</p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p><strong>Status:</strong> 200 OK</p>
+        <p><strong>Response:</strong> Returns an array of movie objects</p>
       </div>
 
-      <h2>Movie Endpoints</h2>
-
-      <div class="endpoint">
-        <div><span class="method get">GET</span> <code>/movies</code></div>
-        <p>Get a list of all movies.</p>
-        <p><strong>Response:</strong> Array of movie objects</p>
-        <div class="response-example">
-          <pre>
-[
-  {
-    "Title": "Movie Title",
-    "Description": "Movie description...",
-    "Genre": {
-      "Name": "Drama",
-      "Description": "Drama films are serious..."
-    },
-    "Director": {
-      "Name": "Director Name",
-      "Bio": "Director bio...",
-      "Birth": "1960-01-01",
-      "Death": ""
-    },
-    "Actors": ["Actor 1", "Actor 2"],
-    "ImagePath": "image.jpg",
-    "Featured": true
-  },
-  ...
-]</pre
-          >
-        </div>
-      </div>
-
-      <div class="endpoint">
-        <div>
-          <span class="method get">GET</span> <code>/movies/:title</code>
-        </div>
-        <p>Get data about a single movie by title.</p>
-        <p><strong>Parameters:</strong> title (in URL)</p>
-        <p><strong>Response:</strong> Movie object</p>
-      </div>
-
-      <div class="endpoint">
-        <div><span class="method get">GET</span> <code>/genres</code></div>
-        <p>Get a list of all genres.</p>
-        <p>
-          <strong>Response:</strong> Array of genre objects with names and
-          descriptions
-        </p>
-      </div>
-
-      <div class="endpoint">
-        <div>
-          <span class="method get">GET</span> <code>/genres/:name</code>
-        </div>
-        <p>Get all movies of a specific genre.</p>
-        <p><strong>Parameters:</strong> genre name (in URL)</p>
-        <p><strong>Response:</strong> Array of movie objects</p>
-      </div>
-
-      <div class="endpoint">
-        <div><span class="method get">GET</span> <code>/directors</code></div>
-        <p>Get a list of all directors.</p>
-        <p><strong>Response:</strong> Array of director objects</p>
-      </div>
-
-      <div class="endpoint">
-        <div>
-          <span class="method get">GET</span> <code>/directors/:name</code>
-        </div>
-        <p>Get data about a specific director.</p>
-        <p><strong>Parameters:</strong> director name (in URL)</p>
-        <p>
-          <strong>Response:</strong> Director object with bio, birth year, and
-          movies
-        </p>
-      </div>
-
-      <div class="endpoint">
-        <div><span class="method get">GET</span> <code>/actors</code></div>
-        <p>Get a list of all actors.</p>
-        <p><strong>Response:</strong> Array of actor names</p>
-      </div>
-
-      <div class="endpoint">
-        <div><span class="method get">GET</span> <code>/actresses</code></div>
-        <p>Get a list of all actresses.</p>
-        <p><strong>Response:</strong> Array of actress names</p>
-      </div>
-
-      <h2>User Endpoints</h2>
-
-      <div class="endpoint">
-        <div><span class="method get">GET</span> <code>/users</code></div>
-        <p>Get a list of all users.</p>
-        <p>
-          <strong>Response:</strong> Array of user objects (without passwords)
-        </p>
-      </div>
-
-      <div class="endpoint">
-        <div><span class="method post">POST</span> <code>/users</code></div>
-        <p>Register a new user.</p>
-        <p><strong>Request Body:</strong></p>
-        <pre>
-{
-  "Username": "newuser",
-  "Password": "password123",
-  "Email": "user@example.com",
-  "Name": "New User"
-}</pre
-        >
-        <p><strong>Response:</strong> Created user object</p>
-      </div>
-
-      <div class="endpoint">
-        <div>
-          <span class="method get">GET</span> <code>/users/:username</code>
-        </div>
-        <p>Get user data by username.</p>
-        <p><strong>Parameters:</strong> username (in URL)</p>
-        <p><strong>Response:</strong> User object</p>
-      </div>
-
-      <div class="endpoint">
-        <div>
-          <span class="method put">PUT</span> <code>/users/:username</code>
-        </div>
-        <p>Update user information.</p>
-        <p><strong>Parameters:</strong> username (in URL)</p>
-        <p>
-          <strong>Request Body:</strong> Fields to update (Username, Password,
-          Email, Name)
-        </p>
-        <p><strong>Response:</strong> Updated user object</p>
-      </div>
-
-      <div class="endpoint">
-        <div>
-          <span class="method post">POST</span>
-          <code>/users/:username/movies/:movieId</code>
-        </div>
-        <p>Add a movie to user's favorites.</p>
-        <p><strong>Parameters:</strong> username, movieId (in URL)</p>
-        <p><strong>Response:</strong> Updated user object</p>
-      </div>
-
-      <div class="endpoint">
-        <div>
-          <span class="method delete">DELETE</span>
-          <code>/users/:username/movies/:movieId</code>
-        </div>
-        <p>Remove a movie from user's favorites.</p>
-        <p><strong>Parameters:</strong> username, movieId (in URL)</p>
-        <p><strong>Response:</strong> Updated user object</p>
-      </div>
-
-      <div class="endpoint">
-        <div>
-          <span class="method delete">DELETE</span>
-          <code>/users/:username</code>
-        </div>
-        <p>Delete a user account.</p>
-        <p><strong>Parameters:</strong> username (in URL)</p>
-        <p><strong>Response:</strong> Confirmation message</p>
-      </div>
-
-      <h2>Response Status Codes</h2>
-      <table>
-        <tr>
-          <th>Code</th>
-          <th>Description</th>
-        </tr>
-        <tr>
-          <td>200</td>
-          <td>OK - Success</td>
-        </tr>
-        <tr>
-          <td>201</td>
-          <td>Created - Resource created successfully</td>
-        </tr>
-        <tr>
-          <td>400</td>
-          <td>Bad Request - Invalid input</td>
-        </tr>
-        <tr>
-          <td>404</td>
-          <td>Not Found - Resource not found</td>
-        </tr>
-        <tr>
-          <td>500</td>
-          <td>Internal Server Error - Something went wrong on the server</td>
-        </tr>
-      </table>
-
-      <h2>Example Requests</h2>
-      <h3>Get all movies</h3>
+      <h4>Example Request:</h4>
       <pre>
 fetch('http://localhost:8080/movies')
   .then(response => response.json())
   .then(data => console.log(data));</pre
       >
-
-      <h3>Register a new user</h3>
-      <pre>
-fetch('http://localhost:8080/users', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    Username: 'newuser',
-    Password: 'password123',
-    Email: 'user@example.com',
-    Name: 'New User'
-  })
-})
-.then(response => response.json())
-.then(data => console.log(data));</pre
-      >
     </div>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/movies/:title</code> - Get movie by title</span>
+      <p>Returns details about a specific movie by title.</p>
+
+      <h4>Parameters:</h4>
+      <table>
+        <tr>
+          <th>Parameter</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>string</td>
+          <td>Title of the movie to retrieve (case sensitive)</td>
+        </tr>
+      </table>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p>
+          <strong>Test URL:</strong>
+          <code>http://localhost:8080/movies/Titanic</code>
+        </p>
+        <p><strong>Status:</strong> 200 OK</p>
+        <p><strong>Response:</strong> Returns the Titanic movie object</p>
+        <pre>
+{
+  "Title": "Titanic",
+  "Description": "A timeless epic romance and disaster film...",
+  "Genre": {
+    "Name": "Drama",
+    "Description": "Emotionally intense stories..."
+  },
+  "Director": {
+    "Name": "James Cameron",
+    "Bio": "Canadian filmmaker known for epic...",
+    "Birth": "1954-08-16",
+    "Death": null
+  },
+  "Actors": ["Leonardo DiCaprio", "Kate Winslet", "Billy Zane"],
+  "Actresses": ["Kate Winslet", "Frances Fisher"],
+  "ReleaseYear": 1997,
+  "IMDbRating": 7.9,
+  "ImagePath": "https://m.media-amazon.com/images/...",
+  "Featured": true
+}</pre
+        >
+      </div>
+    </div>
+
+    <h2 id="genres">Genre Endpoints</h2>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/genres</code> - Get all genres</span>
+      <p>
+        Returns a list of all genres in the database with their descriptions.
+      </p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p><strong>Status:</strong> 200 OK</p>
+        <p><strong>Response:</strong> Returns an array of genre objects</p>
+        <pre>
+[
+  {
+    "_id": "Drama",
+    "description": "Emotionally intense stories exploring human conflicts..."
+  },
+  {
+    "_id": "Science Fiction",
+    "description": "Futuristic worlds, advanced tech, space adventures..."
+  }
+]</pre
+        >
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/genres/:name</code> - Get movies by genre</span>
+      <p>Returns all movies belonging to a specific genre.</p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p>
+          <strong>Test URL:</strong>
+          <code>http://localhost:8080/genres/Science%20Fiction</code>
+        </p>
+        <p><strong>Status:</strong> 200 OK</p>
+        <p>
+          <strong>Response:</strong> Returns array of movies in the Sci-Fi genre
+        </p>
+      </div>
+    </div>
+
+    <h2 id="directors">Director Endpoints</h2>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/directors</code> - Get all directors</span>
+      <p>
+        Returns a list of all directors in the database with their bios and
+        birth/death dates.
+      </p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p><strong>Status:</strong> 200 OK</p>
+        <p><strong>Response:</strong> Returns array of director objects</p>
+        <pre>
+[
+  {
+    "_id": "James Cameron",
+    "bio": "Canadian filmmaker known for epic...",
+    "birth": "1954-08-16",
+    "death": null
+  },
+  {
+    "_id": "Christopher Nolan",
+    "bio": "British-American filmmaker renowned...",
+    "birth": "1970-07-30",
+    "death": null
+  }
+]</pre
+        >
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/directors/:name</code> - Get director by name</span>
+      <p>Returns detailed information about a specific director.</p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p>
+          <strong>Test URL:</strong>
+          <code>http://localhost:8080/directors/James%20Cameron</code>
+        </p>
+        <p><strong>Status:</strong> 200 OK</p>
+        <p>
+          <strong>Response:</strong> Returns director details with example movie
+        </p>
+        <pre>
+{
+  "name": "James Cameron",
+  "bio": "Canadian filmmaker known for epic...",
+  "birth": "1954-08-16",
+  "death": null,
+  "movies": "Titanic"
+}</pre
+        >
+      </div>
+    </div>
+
+    <h2 id="actors">Actor/Actress Endpoints</h2>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/actors</code> - Get all actors</span>
+      <p>Returns a list of all actors appearing in movies in the database.</p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p><strong>Status:</strong> 200 OK</p>
+        <p><strong>Response:</strong> Returns array of actor names</p>
+        <pre>
+[
+  "Leonardo DiCaprio",
+  "Arnold Schwarzenegger",
+  "Christian Bale",
+  "Johnny Depp"
+]</pre
+        >
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/actresses</code> - Get all actresses</span>
+      <p>
+        Returns a list of all actresses appearing in movies in the database.
+      </p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p><strong>Status:</strong> 200 OK</p>
+        <p><strong>Response:</strong> Returns array of actress names</p>
+        <pre>
+[
+  "Kate Winslet",
+  "Scarlett Johansson",
+  "Zoe Saldana",
+  "Carrie-Anne Moss"
+]</pre
+        >
+      </div>
+    </div>
+
+    <h2 id="users">User Endpoints</h2>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/users</code> - Get all users</span>
+      <p>Returns a list of all registered users (passwords are hashed).</p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p><strong>Status:</strong> 200 OK</p>
+        <p><strong>Response:</strong> Returns array of user objects</p>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <span class="method post">POST</span>
+      <span><code>/users</code> - Register new user</span>
+      <p>
+        Creates a new user account. Password is automatically hashed before
+        storage.
+      </p>
+
+      <h4>Request Body:</h4>
+      <pre>
+{
+  "Username": "newuser123",
+  "Password": "securepassword",
+  "Email": "user@example.com",
+  "Name": "John Doe",
+  "FavoriteMovies": []
+}</pre
+      >
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p><strong>Status:</strong> 201 Created</p>
+        <p>
+          <strong>Response:</strong> Returns the created user object (with
+          hashed password)
+        </p>
+        <pre>
+{
+  "_id": "6848cfdbd464850d899e35f4",
+  "Username": "newuser123",
+  "Password": "$2a$10$N9qo8uLOickgx2ZMRZoMy...",
+  "Email": "user@example.com",
+  "Name": "John Doe",
+  "FavoriteMovies": []
+}</pre
+        >
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span><code>/users/:username</code> - Get user by username</span>
+      <p>Returns details about a specific user.</p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p>
+          <strong>Test URL:</strong>
+          <code>http://localhost:8080/users/michaelb</code>
+        </p>
+        <p><strong>Status:</strong> 200 OK</p>
+        <p>
+          <strong>Response:</strong> Returns user details with favorite movies
+        </p>
+        <pre>
+{
+  "_id": "684026d28dda30a4fe6c4be5",
+  "Username": "michaelb",
+  "Email": "michael.brown@example.com",
+  "Name": "Michael Brown",
+  "FavoriteMovies": [
+    "684026918dda30a4fe6c4bd8",
+    "684026918dda30a4fe6c4bda",
+    "684026918dda30a4fe6c4bdc",
+    "684026918dda30a4fe6c4bd0"
+  ]
+}</pre
+        >
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <span class="method put">PUT</span>
+      <span><code>/users/:username</code> - Update user info</span>
+      <p>Updates information for an existing user.</p>
+
+      <h4>Request Body:</h4>
+      <pre>
+{
+  "Username": "updateduser",
+  "Password": "newpassword",
+  "Email": "updated@example.com",
+  "Name": "Updated Name"
+}</pre
+      >
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p>
+          <strong>Test URL:</strong>
+          <code>http://localhost:8080/users/michaelb</code>
+        </p>
+        <p><strong>Status:</strong> 200 OK</p>
+        <p><strong>Response:</strong> Returns the updated user object</p>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <span class="method post">POST</span>
+      <span
+        ><code>/users/:username/movies/:movieId</code> - Add movie to
+        favorites</span
+      >
+      <p>Adds a movie to a user's list of favorite movies.</p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p>
+          <strong>Test URL:</strong>
+          <code
+            >http://localhost:8080/users/michaelb/movies/684026918dda30a4fe6c4bd5</code
+          >
+        </p>
+        <p><strong>Status:</strong> 200 OK</p>
+        <p>
+          <strong>Response:</strong> Returns user with updated favorites list
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <span class="method delete">DELETE</span>
+      <span
+        ><code>/users/:username/movies/:movieId</code> - Remove movie from
+        favorites</span
+      >
+      <p>Removes a movie from a user's list of favorite movies.</p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p>
+          <strong>Test URL:</strong>
+          <code
+            >http://localhost:8080/users/michaelb/movies/684026918dda30a4fe6c4bd5</code
+          >
+        </p>
+        <p><strong>Status:</strong> 200 OK</p>
+        <p>
+          <strong>Response:</strong> Returns user with updated favorites list
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <span class="method delete">DELETE</span>
+      <span><code>/users/:username</code> - Delete user</span>
+      <p>Deletes a user account.</p>
+
+      <h4>Postman Test Result:</h4>
+      <div class="postman-result">
+        <p>
+          <strong>Test URL:</strong>
+          <code>http://localhost:8080/users/michaelb</code>
+        </p>
+        <p><strong>Status:</strong> 200 OK</p>
+        <p><strong>Response:</strong> Returns confirmation message</p>
+        <pre>"michaelb was deleted."</pre>
+      </div>
+    </div>
+
+    <h2 id="models">Data Models</h2>
+
+    <h3>Movie Model (models.js)</h3>
+    <pre>
+let movieSchema = mongoose.Schema({
+  Title: { type: String, required: true },
+  Description: { type: String, required: true },
+  Genre: {
+    Name: String,
+    Description: String,
+  },
+  Director: {
+    Name: String,
+    Bio: String,
+    Birth: Date,
+    Death: Date,
+  },
+  Actors: [String],
+  Actresses: [String],
+  ReleaseYear: Number,
+  IMDbRating: Number,
+  ImagePath: String,
+  Featured: Boolean,
+});</pre
+    >
+
+    <h3>User Model (models.js)</h3>
+    <pre>
+let userSchema = mongoose.Schema({
+  Username: { type: String, required: true },
+  Password: { type: String, required: true },
+  Email: { type: String, required: true },
+  Birthday: Date,
+  FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Movie" }],
+});
+
+// Password hashing methods
+userSchema.statics.hashPassword = function (password) {
+  return bcrypt.hashSync(password, 10);
+};
+userSchema.methods.validatePassword = function (password) {
+  return bcrypt.compareSync(password, this.Password);
+};</pre
+    >
+
+    <h2 id="database">Database Information</h2>
+
+    <h3>MongoDB Connection (index.js)</h3>
+    <pre>
+// Connect to MongoDB
+mongoose.connect("mongodb://localhost:27017/myFlixDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});</pre
+    >
+
+    <h3>Sample Movie Data</h3>
+    <p>
+      The database contains 18 movies with details about directors, genres,
+      actors, and ratings.
+    </p>
+    <p>Example movie document from MongoDB:</p>
+    <pre>
+{
+  "_id": ObjectId("684026918dda30a4fe6c4bd0"),
+  "actresses": ["Kate Winslet", "Frances Fisher"],
+  "Actors": ["Leonardo DiCaprio", "Kate Winslet", "Billy Zane"],
+  "Description": "A timeless epic romance and disaster film...",
+  "Director": {
+    "Name": "James Cameron",
+    "Bio": "Canadian filmmaker known for epic...",
+    "Birth": "1954-08-16",
+    "Death": null
+  },
+  "Featured": true,
+  "Genre": {
+    "Name": "Drama",
+    "Description": "Emotionally intense stories..."
+  },
+  "IMDbRating": 7.9,
+  "ImagePath": "https://m.media-amazon.com/images/...",
+  "ReleaseYear": 1997,
+  "Title": "Titanic"
+}</pre
+    >
+
+    <h3>Sample User Data</h3>
+    <p>
+      The database contains 10 users with hashed passwords and favorite movie
+      references.
+    </p>
+    <p>Example user document from MongoDB:</p>
+    <pre>
+{
+  "_id": ObjectId("684026d28dda30a4fe6c4be5"),
+  "Username": "michaelb",
+  "Password": "$2a$10$N9qo8uLOickgx2ZMRZoMy...",
+  "Email": "michael.brown@example.com",
+  "Name": "Michael Brown",
+  "FavoriteMovies": [
+    ObjectId("684026918dda30a4fe6c4bd8"),
+    ObjectId("684026918dda30a4fe6c4bda"),
+    ObjectId("684026918dda30a4fe6c4bdc"),
+    ObjectId("684026918dda30a4fe6c4bd0")
+  ]
+}</pre
+    >
+
+    <h2>Authentication</h2>
+    <p>
+      The API currently uses basic authentication. Passwords are securely hashed
+      using bcrypt before storage with a salt factor of 10.
+    </p>
+
+    <h2>Error Handling</h2>
+    <p>The API returns appropriate HTTP status codes:</p>
+    <ul>
+      <li><code>200</code> - OK (successful request)</li>
+      <li><code>201</code> - Created (successful creation)</li>
+      <li><code>400</code> - Bad Request (invalid input or username exists)</li>
+      <li><code>404</code> - Not Found (resource doesn't exist)</li>
+      <li><code>500</code> - Internal Server Error (server-side problem)</li>
+    </ul>
+
+    <footer
+      style="margin-top: 50px; padding: 20px 0; border-top: 1px solid #eee"
+    >
+      <p>myFlix API Documentation &copy; 2023</p>
+    </footer>
   </body>
 </html>
